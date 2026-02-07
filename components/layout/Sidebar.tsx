@@ -9,13 +9,17 @@ import {
   Search, 
   Home,
   Settings,
-  Zap
+  Zap,
+  Brain,
+  Wrench
 } from "lucide-react";
 
 const navItems = [
   { href: "/", label: "Dashboard", icon: Home },
-  { href: "/activity", label: "Activity Feed", icon: Activity },
+  { href: "/activity", label: "Activity", icon: Activity },
   { href: "/calendar", label: "Calendar", icon: Calendar },
+  { href: "/memory", label: "Memory", icon: Brain },
+  { href: "/skills", label: "Skills", icon: Wrench },
   { href: "/search", label: "Search", icon: Search },
 ];
 

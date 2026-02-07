@@ -26,6 +26,7 @@ export default defineSchema({
   memories: defineTable({
     title: v.string(),
     content: v.string(),
+    memoryType: v.optional(v.string()), // "long-term" or "daily"
     createdAt: v.number(),
     tags: v.optional(v.array(v.string())),
   }).index("by_createdAt", ["createdAt"]),
@@ -37,4 +38,11 @@ export default defineSchema({
     createdAt: v.number(),
     updatedAt: v.number(),
   }).index("by_updatedAt", ["updatedAt"]),
+
+  skills: defineTable({
+    name: v.string(),
+    description: v.string(),
+    location: v.optional(v.string()),
+    enabled: v.optional(v.boolean()),
+  }),
 });

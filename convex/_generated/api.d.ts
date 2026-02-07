@@ -9,9 +9,11 @@
  */
 
 import type * as activities from "../activities.js";
+import type * as memories from "../memories.js";
 import type * as scheduledTasks from "../scheduledTasks.js";
 import type * as search from "../search.js";
 import type * as seed from "../seed.js";
+import type * as skills from "../skills.js";
 import type * as sync from "../sync.js";
 
 import type {
@@ -22,9 +24,11 @@ import type {
 
 declare const fullApi: ApiFromModules<{
   activities: typeof activities;
+  memories: typeof memories;
   scheduledTasks: typeof scheduledTasks;
   search: typeof search;
   seed: typeof seed;
+  skills: typeof skills;
   sync: typeof sync;
 }>;
 

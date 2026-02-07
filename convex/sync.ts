@@ -68,6 +68,59 @@ export const syncCronJobs = mutation({
   },
 });
 
+// Sync memories from Clawdbot
+export const syncMemories = mutation({
+  args: {
+    memories: v.array(v.object({
+      title: v.string(),
+      content: v.string(),
+      memoryType: v.string(),
+      createdAt: v.number(),
+      tags: v.optional(v.array(v.string())),
+    })),
+  },
+  handler: async (ctx, args) => {
+    // Clear existing memories
+    const existing = await ctx.db.query("memories").collect();
+    for (const m of existing) {
+      await ctx.db.delete(m._id);
+    }
+
+    // Add new memories
+    for (const memory of args.memories) {
+      await ctx.db.insert("memories", memory);
+    }
+
+    return { synced: args.memories.length };
+  },
+});
+
+// Sync skills from Clawdbot
+export const syncSkills = mutation({
+  args: {
+    skills: v.array(v.object({
+      name: v.string(),
+      description: v.string(),
+      location: v.optional(v.string()),
+      enabled: v.optional(v.boolean()),
+    })),
+  },
+  handler: async (ctx, args) => {
+    // Clear existing skills
+    const existing = await ctx.db.query("skills").collect();
+    for (const s of existing) {
+      await ctx.db.delete(s._id);
+    }
+
+    // Add new skills
+    for (const skill of args.skills) {
+      await ctx.db.insert("skills", skill);
+    }
+
+    return { synced: args.skills.length };
+  },
+});
+
 // Log a real activity
 export const logActivity = mutation({
   args: {

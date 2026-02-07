@@ -5,17 +5,17 @@ import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { 
   Activity, 
-  Calendar, 
-  Search, 
   Home,
-  Settings
+  Settings,
+  Brain,
+  Wrench
 } from "lucide-react";
 
 const navItems = [
   { href: "/", label: "Home", icon: Home },
   { href: "/activity", label: "Activity", icon: Activity },
-  { href: "/calendar", label: "Calendar", icon: Calendar },
-  { href: "/search", label: "Search", icon: Search },
+  { href: "/memory", label: "Memory", icon: Brain },
+  { href: "/skills", label: "Skills", icon: Wrench },
   { href: "/settings", label: "Settings", icon: Settings },
 ];
 

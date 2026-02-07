@@ -1,8 +1,13 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import dynamic from "next/dynamic";
 import "./globals.css";
-import { ConvexClientProvider } from "@/components/providers/ConvexClientProvider";
 import { Sidebar } from "@/components/layout/Sidebar";
+
+const ConvexClientProvider = dynamic(
+  () => import("@/components/providers/ConvexClientProvider").then(mod => mod.ConvexClientProvider),
+  { ssr: false }
+);
 
 const inter = Inter({ subsets: ["latin"] });
 

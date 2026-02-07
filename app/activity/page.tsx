@@ -14,39 +14,39 @@ export default function ActivityPage() {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="flex items-start justify-between gap-4">
-        <div>
+      <div>
+        <div className="flex items-center justify-between gap-4">
           <h1 className="text-2xl md:text-3xl font-bold text-white">Activity Feed</h1>
-          <p className="text-zinc-400 mt-1 text-sm md:text-base">Real-time log of all agent actions</p>
+          
+          {/* View Toggle */}
+          <div className="flex gap-1 bg-zinc-800 rounded-lg p-1">
+            <Button
+              variant="ghost"
+              size="sm"
+              className={cn(
+                "h-9 px-3",
+                view === "grouped" ? "bg-blue-600 text-white" : "text-zinc-400"
+              )}
+              onClick={() => setView("grouped")}
+            >
+              <LayoutGrid className="h-4 w-4 sm:mr-1.5" />
+              <span className="hidden sm:inline">Grouped</span>
+            </Button>
+            <Button
+              variant="ghost"
+              size="sm"
+              className={cn(
+                "h-9 px-3",
+                view === "list" ? "bg-blue-600 text-white" : "text-zinc-400"
+              )}
+              onClick={() => setView("list")}
+            >
+              <List className="h-4 w-4 sm:mr-1.5" />
+              <span className="hidden sm:inline">List</span>
+            </Button>
+          </div>
         </div>
-        
-        {/* View Toggle */}
-        <div className="flex gap-1 bg-zinc-800 rounded-lg p-1">
-          <Button
-            variant="ghost"
-            size="sm"
-            className={cn(
-              "h-8 px-3",
-              view === "grouped" && "bg-zinc-700"
-            )}
-            onClick={() => setView("grouped")}
-          >
-            <LayoutGrid className="h-4 w-4 mr-1.5" />
-            <span className="hidden sm:inline">Grouped</span>
-          </Button>
-          <Button
-            variant="ghost"
-            size="sm"
-            className={cn(
-              "h-8 px-3",
-              view === "list" && "bg-zinc-700"
-            )}
-            onClick={() => setView("list")}
-          >
-            <List className="h-4 w-4 mr-1.5" />
-            <span className="hidden sm:inline">List</span>
-          </Button>
-        </div>
+        <p className="text-zinc-400 mt-1 text-sm md:text-base">Real-time log of all agent actions</p>
       </div>
 
       {/* Feed */}

@@ -3,8 +3,10 @@
 import { useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { formatDistanceToNow } from "date-fns";
+import { useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 import { 
   Mail, 
   Clock, 
@@ -20,7 +22,10 @@ import {
   Youtube,
   TrendingUp,
   Mic,
-  LayoutDashboard
+  LayoutDashboard,
+  ChevronDown,
+  ChevronUp,
+  X
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -51,6 +56,7 @@ const statusConfig = {
 
 export function ActivityFeedGrouped() {
   const grouped = useQuery(api.activities.listGroupedByProject, { limit: 100 });
+  const [expandedProject, setExpandedProject] = useState<string | null>(null);
 
   if (!grouped) {
     return (
@@ -79,15 +85,85 @@ export function ActivityFeedGrouped() {
     );
   }
 
+  // If a project is expanded, show full screen modal
+  if (expandedProject && grouped[expandedProject]) {
+    const activities = grouped[expandedProject];
+    const config = projectConfig[expandedProject] || projectConfig.other;
+    const ProjectIcon = config.icon;
+
+    return (
+      <div className="space-y-4">
+        {/* Header with back button */}
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <ProjectIcon className={cn("h-6 w-6", config.color)} />
+            <h2 className="text-xl font-bold text-white">{config.label}</h2>
+            <Badge variant="outline">{activities.length} activities</Badge>
+          </div>
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={() => setExpandedProject(null)}
+            className="text-zinc-400 hover:text-white"
+          >
+            <X className="h-4 w-4 mr-1" />
+            Close
+          </Button>
+        </div>
+
+        {/* All activities */}
+        <div className="space-y-2">
+          {activities.map((activity: any) => {
+            const Icon = iconMap[activity.actionType] || iconMap.default;
+            const status = statusConfig[activity.status as keyof typeof statusConfig];
+            const StatusIcon = status.icon;
+
+            return (
+              <Card key={activity._id} className="border-zinc-800 bg-zinc-900/50">
+                <CardContent className="flex items-start gap-3 p-3">
+                  <div className={cn("rounded-lg p-2", status.bg)}>
+                    <Icon className={cn("h-4 w-4", status.color)} />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-2 mb-1">
+                      <Badge variant="outline" className="text-xs capitalize">
+                        {activity.actionType}
+                      </Badge>
+                      <StatusIcon className={cn("h-3 w-3", status.color, activity.status === "pending" && "animate-spin")} />
+                    </div>
+                    <p className="text-sm text-zinc-300">
+                      {activity.description}
+                    </p>
+                    <p className="text-xs text-zinc-500 mt-1">
+                      {formatDistanceToNow(activity.timestamp, { addSuffix: true })}
+                    </p>
+                  </div>
+                </CardContent>
+              </Card>
+            );
+          })}
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="space-y-6">
       {sortedProjects.map((projectKey) => {
         const activities = grouped[projectKey];
         const config = projectConfig[projectKey] || projectConfig.other;
         const ProjectIcon = config.icon;
+        const hasMore = activities.length > 5;
 
         return (
-          <Card key={projectKey} className="border-zinc-800 bg-zinc-900/50">
+          <Card 
+            key={projectKey} 
+            className={cn(
+              "border-zinc-800 bg-zinc-900/50 transition-colors",
+              hasMore && "cursor-pointer hover:bg-zinc-900"
+            )}
+            onClick={() => hasMore && setExpandedProject(projectKey)}
+          >
             <CardHeader className="pb-3">
               <CardTitle className="flex items-center gap-2 text-lg">
                 <ProjectIcon className={cn("h-5 w-5", config.color)} />
@@ -95,6 +171,9 @@ export function ActivityFeedGrouped() {
                 <Badge variant="outline" className="ml-auto text-xs">
                   {activities.length}
                 </Badge>
+                {hasMore && (
+                  <ChevronDown className="h-4 w-4 text-zinc-500" />
+                )}
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-2">
@@ -107,6 +186,7 @@ export function ActivityFeedGrouped() {
                   <div 
                     key={activity._id} 
                     className="flex items-start gap-3 p-2 rounded-lg hover:bg-zinc-800/50 transition-colors"
+                    onClick={(e) => e.stopPropagation()}
                   >
                     <div className={cn("rounded-lg p-1.5", status.bg)}>
                       <Icon className={cn("h-4 w-4", status.color)} />
@@ -125,9 +205,9 @@ export function ActivityFeedGrouped() {
                   </div>
                 );
               })}
-              {activities.length > 5 && (
-                <p className="text-xs text-zinc-500 text-center pt-2">
-                  +{activities.length - 5} more
+              {hasMore && (
+                <p className="text-xs text-blue-400 text-center pt-2 font-medium">
+                  Tap to see all {activities.length} activities →
                 </p>
               )}
             </CardContent>

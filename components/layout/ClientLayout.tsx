@@ -1,23 +1,24 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import { ReactNode } from "react";
-import { Sidebar } from "./Sidebar";
+import { ReactNode, useState, useEffect } from "react";
 
-const ConvexClientProvider = dynamic(
-  () => import("@/components/providers/ConvexClientProvider").then(mod => mod.ConvexClientProvider),
-  { ssr: false }
+// Dynamically import everything that needs Convex
+const AppContent = dynamic(
+  () => import("./AppContent").then(mod => mod.AppContent),
+  { 
+    ssr: false,
+    loading: () => (
+      <div className="flex items-center justify-center min-h-screen bg-zinc-950 text-white">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-white mx-auto mb-4"></div>
+          <p className="text-zinc-400">Loading Mission Control...</p>
+        </div>
+      </div>
+    )
+  }
 );
 
 export function ClientLayout({ children }: { children: ReactNode }) {
-  return (
-    <ConvexClientProvider>
-      <div className="flex min-h-screen">
-        <Sidebar />
-        <main className="flex-1 ml-64 p-8">
-          {children}
-        </main>
-      </div>
-    </ConvexClientProvider>
-  );
+  return <AppContent>{children}</AppContent>;
 }

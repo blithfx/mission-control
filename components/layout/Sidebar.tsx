@@ -11,11 +11,13 @@ import {
   Settings,
   Zap,
   Brain,
-  Wrench
+  Wrench,
+  ListTodo
 } from "lucide-react";
 
 const navItems = [
   { href: "/", label: "Dashboard", icon: Home },
+  { href: "/tasks", label: "Tasks", icon: ListTodo },
   { href: "/activity", label: "Activity", icon: Activity },
   { href: "/calendar", label: "Calendar", icon: Calendar },
   { href: "/memory", label: "Memory", icon: Brain },

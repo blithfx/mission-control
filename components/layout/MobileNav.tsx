@@ -6,17 +6,17 @@ import { cn } from "@/lib/utils";
 import { 
   Activity, 
   Home,
-  Settings,
   Brain,
-  Wrench
+  ListTodo,
+  MoreHorizontal
 } from "lucide-react";
 
 const navItems = [
   { href: "/", label: "Home", icon: Home },
+  { href: "/tasks", label: "Tasks", icon: ListTodo },
   { href: "/activity", label: "Activity", icon: Activity },
   { href: "/memory", label: "Memory", icon: Brain },
-  { href: "/skills", label: "Skills", icon: Wrench },
-  { href: "/settings", label: "Settings", icon: Settings },
+  { href: "/settings", label: "More", icon: MoreHorizontal },
 ];
 
 export function MobileNav() {

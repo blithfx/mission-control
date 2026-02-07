@@ -15,6 +15,7 @@ import type * as search from "../search.js";
 import type * as seed from "../seed.js";
 import type * as skills from "../skills.js";
 import type * as sync from "../sync.js";
+import type * as tasks from "../tasks.js";
 
 import type {
   ApiFromModules,
@@ -30,6 +31,7 @@ declare const fullApi: ApiFromModules<{
   seed: typeof seed;
   skills: typeof skills;
   sync: typeof sync;
+  tasks: typeof tasks;
 }>;
 
 /**

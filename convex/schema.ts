@@ -45,4 +45,15 @@ export default defineSchema({
     location: v.optional(v.string()),
     enabled: v.optional(v.boolean()),
   }),
+
+  tasks: defineTable({
+    title: v.string(),
+    description: v.optional(v.string()),
+    status: v.string(), // "backlog" | "in-progress" | "blocked" | "done"
+    priority: v.optional(v.string()), // "low" | "medium" | "high"
+    createdAt: v.number(),
+    updatedAt: v.number(),
+    completedAt: v.optional(v.number()),
+  }).index("by_status", ["status"])
+    .index("by_updatedAt", ["updatedAt"]),
 });

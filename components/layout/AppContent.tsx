@@ -9,7 +9,8 @@ export function AppContent({ children }: { children: ReactNode }) {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const url = process.env.NEXT_PUBLIC_CONVEX_URL;
+    // Hardcoded temporarily - env var not working in Vercel
+    const url = process.env.NEXT_PUBLIC_CONVEX_URL || "https://effervescent-giraffe-131.convex.cloud";
     
     if (!url) {
       setError("NEXT_PUBLIC_CONVEX_URL is not configured");

@@ -7,9 +7,11 @@ export default defineSchema({
     actionType: v.string(),
     description: v.string(),
     status: v.union(v.literal("success"), v.literal("pending"), v.literal("error")),
+    project: v.optional(v.string()), // "youtube" | "polymarket" | "podcast" | "dashboard" | "other"
     metadata: v.optional(v.any()),
   }).index("by_timestamp", ["timestamp"])
-    .index("by_actionType", ["actionType"]),
+    .index("by_actionType", ["actionType"])
+    .index("by_project", ["project"]),
 
   scheduledTasks: defineTable({
     name: v.string(),

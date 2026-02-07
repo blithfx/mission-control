@@ -127,6 +127,7 @@ export const logActivity = mutation({
     actionType: v.string(),
     description: v.string(),
     status: v.union(v.literal("success"), v.literal("error"), v.literal("pending")),
+    project: v.optional(v.string()),
     metadata: v.optional(v.any()),
   },
   handler: async (ctx, args) => {
@@ -135,6 +136,7 @@ export const logActivity = mutation({
       actionType: args.actionType,
       description: args.description,
       status: args.status,
+      project: args.project || "other",
       metadata: args.metadata,
     });
   },

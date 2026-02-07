@@ -12,6 +12,7 @@ import type * as activities from "../activities.js";
 import type * as scheduledTasks from "../scheduledTasks.js";
 import type * as search from "../search.js";
 import type * as seed from "../seed.js";
+import type * as sync from "../sync.js";
 
 import type {
   ApiFromModules,
@@ -24,6 +25,7 @@ declare const fullApi: ApiFromModules<{
   scheduledTasks: typeof scheduledTasks;
   search: typeof search;
   seed: typeof seed;
+  sync: typeof sync;
 }>;
 
 /**

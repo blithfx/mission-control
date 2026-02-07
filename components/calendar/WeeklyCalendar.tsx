@@ -49,14 +49,14 @@ export function WeeklyCalendar() {
     <div className="space-y-4">
       {/* Header */}
       <div className="flex items-center justify-between">
-        <h2 className="text-xl font-semibold text-white">
+        <h2 className="text-lg md:text-xl font-semibold text-white">
           {format(weekStart, "MMM d")} - {format(weekEnd, "MMM d, yyyy")}
         </h2>
-        <div className="flex gap-2">
+        <div className="flex gap-1 md:gap-2">
           <Button
             variant="outline"
             size="icon"
-            className="border-zinc-700"
+            className="border-zinc-700 h-8 w-8 md:h-10 md:w-10"
             onClick={() => setCurrentDate(subWeeks(currentDate, 1))}
           >
             <ChevronLeft className="h-4 w-4" />
@@ -64,7 +64,7 @@ export function WeeklyCalendar() {
           <Button
             variant="outline"
             size="sm"
-            className="border-zinc-700"
+            className="border-zinc-700 h-8 md:h-10 text-xs md:text-sm"
             onClick={() => setCurrentDate(new Date())}
           >
             Today
@@ -72,7 +72,7 @@ export function WeeklyCalendar() {
           <Button
             variant="outline"
             size="icon"
-            className="border-zinc-700"
+            className="border-zinc-700 h-8 w-8 md:h-10 md:w-10"
             onClick={() => setCurrentDate(addWeeks(currentDate, 1))}
           >
             <ChevronRight className="h-4 w-4" />
@@ -80,8 +80,8 @@ export function WeeklyCalendar() {
         </div>
       </div>
 
-      {/* Calendar Grid */}
-      <div className="grid grid-cols-7 gap-2">
+      {/* Desktop: Grid View */}
+      <div className="hidden md:grid grid-cols-7 gap-2">
         {days.map((day) => (
           <div key={day.toISOString()} className="min-h-[200px]">
             {/* Day Header */}
@@ -126,6 +126,77 @@ export function WeeklyCalendar() {
             </div>
           </div>
         ))}
+      </div>
+
+      {/* Mobile: List View */}
+      <div className="md:hidden space-y-4">
+        {days.map((day) => {
+          const dayTasks = getTasksForDay(day);
+          return (
+            <div key={day.toISOString()}>
+              {/* Day Header */}
+              <div className={cn(
+                "flex items-center gap-3 py-3 px-4 rounded-lg mb-2",
+                isToday(day) ? "bg-blue-500/20" : "bg-zinc-800/50"
+              )}>
+                <div className={cn(
+                  "text-2xl font-bold",
+                  isToday(day) ? "text-blue-400" : "text-white"
+                )}>
+                  {format(day, "d")}
+                </div>
+                <div>
+                  <div className={cn(
+                    "text-sm font-medium",
+                    isToday(day) ? "text-blue-400" : "text-white"
+                  )}>
+                    {format(day, "EEEE")}
+                  </div>
+                  <div className="text-xs text-zinc-500">
+                    {format(day, "MMMM yyyy")}
+                  </div>
+                </div>
+                {isToday(day) && (
+                  <Badge className="ml-auto bg-blue-500/20 text-blue-400 border-blue-500">
+                    Today
+                  </Badge>
+                )}
+              </div>
+
+              {/* Tasks for this day */}
+              {dayTasks.length > 0 ? (
+                <div className="space-y-2 pl-2">
+                  {dayTasks.map((task) => (
+                    <Card
+                      key={task._id}
+                      className={cn(
+                        "border cursor-pointer",
+                        colorClasses[task.color || "blue"],
+                        !task.enabled && "opacity-50"
+                      )}
+                    >
+                      <CardContent className="p-3 flex items-center gap-3">
+                        <div className="flex items-center gap-1 text-sm">
+                          <Clock className="h-4 w-4" />
+                          {format(new Date(task.nextRun), "HH:mm")}
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <p className="font-medium truncate">{task.name}</p>
+                          <p className="text-xs opacity-75 truncate">{task.description}</p>
+                        </div>
+                        <Badge variant="outline" className="text-xs capitalize shrink-0">
+                          {task.taskType}
+                        </Badge>
+                      </CardContent>
+                    </Card>
+                  ))}
+                </div>
+              ) : (
+                <p className="text-zinc-500 text-sm pl-4 py-2">No tasks scheduled</p>
+              )}
+            </div>
+          );
+        })}
       </div>
     </div>
   );

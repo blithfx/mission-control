@@ -3,6 +3,7 @@
 import { ReactNode, useState, useEffect } from "react";
 import { ConvexProvider, ConvexReactClient } from "convex/react";
 import { Sidebar } from "./Sidebar";
+import { MobileNav } from "./MobileNav";
 
 export function AppContent({ children }: { children: ReactNode }) {
   const [convex, setConvex] = useState<ConvexReactClient | null>(null);
@@ -52,9 +53,10 @@ export function AppContent({ children }: { children: ReactNode }) {
     <ConvexProvider client={convex}>
       <div className="flex min-h-screen">
         <Sidebar />
-        <main className="flex-1 ml-64 p-8">
+        <main className="flex-1 md:ml-64 p-4 md:p-8 pb-20 md:pb-8">
           {children}
         </main>
+        <MobileNav />
       </div>
     </ConvexProvider>
   );

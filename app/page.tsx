@@ -12,8 +12,8 @@ export default function Dashboard() {
     <div className="space-y-8">
       {/* Header */}
       <div>
-        <h1 className="text-3xl font-bold text-white">Mission Control</h1>
-        <p className="text-zinc-400 mt-1">Monitor your agent's activities in real-time</p>
+        <h1 className="text-2xl md:text-3xl font-bold text-white">Mission Control</h1>
+        <p className="text-zinc-400 mt-1 text-sm md:text-base">Monitor your agent's activities in real-time</p>
       </div>
 
       {/* Stats */}

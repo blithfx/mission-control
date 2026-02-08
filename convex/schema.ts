@@ -25,6 +25,24 @@ export default defineSchema({
   }).index("by_nextRun", ["nextRun"])
     .index("by_taskType", ["taskType"]),
 
+  cronJobs: defineTable({
+    jobId: v.string(), // Clawdbot cron job ID
+    name: v.string(),
+    enabled: v.boolean(),
+    cronExpression: v.string(),
+    timezone: v.string(),
+    message: v.string(), // The task message/instructions
+    channel: v.optional(v.string()),
+    sessionTarget: v.optional(v.string()),
+    nextRunAtMs: v.optional(v.number()),
+    lastRunAtMs: v.optional(v.number()),
+    lastStatus: v.optional(v.string()),
+    lastDurationMs: v.optional(v.number()),
+    createdAtMs: v.number(),
+    updatedAtMs: v.number(),
+  }).index("by_nextRun", ["nextRunAtMs"])
+    .index("by_name", ["name"]),
+
   memories: defineTable({
     title: v.string(),
     content: v.string(),

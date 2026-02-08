@@ -9,6 +9,7 @@
  */
 
 import type * as activities from "../activities.js";
+import type * as cron from "../cron.js";
 import type * as memories from "../memories.js";
 import type * as scheduledTasks from "../scheduledTasks.js";
 import type * as search from "../search.js";
@@ -25,6 +26,7 @@ import type {
 
 declare const fullApi: ApiFromModules<{
   activities: typeof activities;
+  cron: typeof cron;
   memories: typeof memories;
   scheduledTasks: typeof scheduledTasks;
   search: typeof search;

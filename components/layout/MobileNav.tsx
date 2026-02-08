@@ -8,14 +8,15 @@ import {
   Home,
   Brain,
   ListTodo,
+  Clock,
   MoreHorizontal
 } from "lucide-react";
 
 const navItems = [
   { href: "/", label: "Home", icon: Home },
   { href: "/tasks", label: "Tasks", icon: ListTodo },
+  { href: "/cron", label: "Cron", icon: Clock },
   { href: "/activity", label: "Activity", icon: Activity },
-  { href: "/memory", label: "Memory", icon: Brain },
   { href: "/settings", label: "More", icon: MoreHorizontal },
 ];
 

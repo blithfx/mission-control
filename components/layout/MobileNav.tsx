@@ -15,8 +15,8 @@ import {
 const navItems = [
   { href: "/", label: "Home", icon: Home },
   { href: "/tasks", label: "Tasks", icon: ListTodo },
+  { href: "/memory", label: "Memory", icon: Brain },
   { href: "/cron", label: "Cron", icon: Clock },
-  { href: "/activity", label: "Activity", icon: Activity },
   { href: "/settings", label: "More", icon: MoreHorizontal },
 ];
 
